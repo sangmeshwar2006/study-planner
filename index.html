@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StudyPlanner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-M9D1C2N8QIvP2LxpI+sMfJzAm8h1Hn0pVITNrW2N7DbStO2Qe6hw2yYB9H9n1tFoZT3zh/OElBTtPlqvEufM3g==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">SP</div>
+        <div>
+          <p class="brand-name">StudyPlanner</p>
+          <span class="brand-tag">Focus &amp; grow</span>
+        </div>
+      </div>
+      <nav>
+        <a href="#dashboard" class="nav-link active" data-link="dashboard"><i class="fa-solid fa-border-all"></i>Dashboard</a>
+        <a href="#tasks" class="nav-link" data-link="tasks"><i class="fa-solid fa-clipboard-check"></i>Tasks</a>
+        <a href="#pomodoro" class="nav-link" data-link="pomodoro"><i class="fa-solid fa-clock"></i>Pomodoro Timer</a>
+        <a href="#analytics" class="nav-link" data-link="analytics"><i class="fa-solid fa-chart-pie"></i>Analytics</a>
+        <a href="#settings" class="nav-link" data-link="settings"><i class="fa-solid fa-gear"></i>Settings</a>
+      </nav>
+      <div class="sidebar-footer">
+        <p class="quote-label">Motivation</p>
+        <p id="quote" class="quote">Small progress is still progress.</p>
+      </div>
+    </aside>
+
+    <main class="content">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Welcome back</p>
+          <h1>Student Dashboard</h1>
+        </div>
+        <div class="top-actions">
+          <button id="random-quote" class="icon-btn" title="New quote"><i class="fa-solid fa-wand-magic-sparkles"></i></button>
+          <button id="theme-toggle" class="icon-btn" title="Toggle dark mode"><i class="fa-solid fa-moon"></i></button>
+          <div class="streak-pill" id="streak-pill">🔥 <span id="streak-count">0</span> Day Streak</div>
+        </div>
+      </header>
+
+      <section id="dashboard" class="section">
+        <div class="cards-grid stats-grid">
+          <div class="card stat-card purple">
+            <div>
+              <p>Total Tasks</p>
+              <h2 id="stat-total">0</h2>
+            </div>
+            <i class="fa-solid fa-list-check"></i>
+          </div>
+          <div class="card stat-card blue">
+            <div>
+              <p>Completed Tasks</p>
+              <h2 id="stat-completed">0</h2>
+            </div>
+            <i class="fa-solid fa-check-circle"></i>
+          </div>
+          <div class="card stat-card pink">
+            <div>
+              <p>Pending Tasks</p>
+              <h2 id="stat-pending">0</h2>
+            </div>
+            <i class="fa-solid fa-hourglass-half"></i>
+          </div>
+          <div class="card stat-card teal">
+            <div>
+              <p>Study Hours Today</p>
+              <h2 id="stat-hours">0</h2>
+            </div>
+            <i class="fa-solid fa-bolt"></i>
+          </div>
+        </div>
+
+        <div class="cards-grid two-col">
+          <div class="card quote-card">
+            <div class="card-head">
+              <p>Motivational Quote</p>
+              <button id="quote-refresh" class="icon-btn"><i class="fa-solid fa-rotate"></i></button>
+            </div>
+            <blockquote id="quote-main">"Small progress is still progress."</blockquote>
+          </div>
+          <div class="card streak-card">
+            <div class="card-head">
+              <p>Study Streak</p>
+            </div>
+            <div class="streak-display">
+              <span>🔥</span>
+              <div>
+                <h2 id="streak-main">0 Days</h2>
+                <p>Complete tasks daily to keep the fire going.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tasks" class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Planner</p>
+            <h2>Tasks &amp; Subjects</h2>
+          </div>
+          <button class="btn primary" id="add-task-btn"><i class="fa-solid fa-plus"></i> Add Task</button>
+        </div>
+
+        <div class="cards-grid two-col">
+          <div class="card form-card">
+            <form id="task-form">
+              <div class="field">
+                <label>Subject Name</label>
+                <input type="text" id="subject" placeholder="e.g., Biology" required />
+              </div>
+              <div class="field">
+                <label>Task Title</label>
+                <input type="text" id="title" placeholder="Read Chapter 4" required />
+              </div>
+              <div class="field half">
+                <div>
+                  <label>Study Date</label>
+                  <input type="date" id="date" required />
+                </div>
+                <div>
+                  <label>Priority</label>
+                  <select id="priority" required>
+                    <option value="High">High</option>
+                    <option value="Medium" selected>Medium</option>
+                    <option value="Low">Low</option>
+                  </select>
+                </div>
+              </div>
+              <input type="hidden" id="edit-id" />
+              <button type="submit" class="btn primary full">Save Task</button>
+            </form>
+          </div>
+
+          <div class="card list-card">
+            <div class="list-header">
+              <h3>Your Tasks</h3>
+              <span class="pill" id="task-count">0 items</span>
+            </div>
+            <div id="task-list" class="task-list">
+              <p class="empty">No tasks yet. Add one to begin!</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="pomodoro" class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Focus</p>
+            <h2>Pomodoro Timer</h2>
+          </div>
+        </div>
+        <div class="card timer-card">
+          <div class="timer-visual">
+            <svg viewBox="0 0 220 220">
+              <circle cx="110" cy="110" r="100" class="bg-ring"></circle>
+              <circle cx="110" cy="110" r="100" class="progress-ring" id="progress-ring"></circle>
+            </svg>
+            <div class="timer-display">
+              <h1 id="timer-display">25:00</h1>
+              <p id="timer-label">Focus</p>
+            </div>
+          </div>
+          <div class="timer-actions">
+            <button class="btn primary" id="start-btn"><i class="fa-solid fa-play"></i> Start</button>
+            <button class="btn ghost" id="pause-btn"><i class="fa-solid fa-pause"></i> Pause</button>
+            <button class="btn ghost" id="reset-btn"><i class="fa-solid fa-rotate"></i> Reset</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="analytics" class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Insights</p>
+            <h2>Study Analytics</h2>
+          </div>
+        </div>
+
+        <div class="cards-grid analytics-grid">
+          <div class="card glass">
+            <p class="eyebrow">Completion Split</p>
+            <canvas id="status-chart" height="240"></canvas>
+          </div>
+          <div class="card glass">
+            <p class="eyebrow">Daily Activity</p>
+            <canvas id="daily-chart" height="240"></canvas>
+          </div>
+          <div class="card glass">
+            <p class="eyebrow">Weekly Productivity</p>
+            <canvas id="weekly-chart" height="240"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <section id="settings" class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Preferences</p>
+            <h2>Settings</h2>
+          </div>
+        </div>
+        <div class="card">
+          <p>Dark mode, quotes, and streak data are stored locally on your device.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
